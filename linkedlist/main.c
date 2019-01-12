@@ -47,12 +47,20 @@ void insertAfter(int value, struct node* start)
 
 void printList(struct node* start)
 {
+    int used = 0;
     curr = start;
     //walk entire list
     while(curr != NULL)
     {
+        used = 1;
         printf("%d\t", curr->value);
         curr = curr->next;
+    }
+    
+    printf("\n");
+
+    if(used == 1){
+        printf("The list is empty");
     }
 }
 
@@ -69,6 +77,18 @@ struct node* findNode(int key){
     return NULL;
 }
 
+void cleanupList()
+{
+    curr = head;
+    while (curr != NULL){
+        curr = curr->next;
+
+        free(head);
+
+        head = curr;
+    }
+}
+
 int main() {
     //reset stdout for some reason??
     setbuf(stdout, 0);
@@ -82,6 +102,10 @@ int main() {
 
     struct node* curr = findNode(0);
     insertAfter(1, curr);
+
+    printList(head);
+
+    cleanupList();
 
     printList(head);
 
